@@ -16,6 +16,11 @@ module.exports = {
     },
 
     // check account already exists or not 
+    isAdmin: async (token) => {
+        const userInfo = await userAccount.userAccount(token);
+        if (userInfo.roll !=='admin') throw new ValidationError("only admin add new editor")
+    },
+    // check account already exists or not 
     accountExists: async (email) => {
         if (await userAccount.myAccount(email)) throw new ValidationError("This email already Exists")
     },
@@ -51,5 +56,5 @@ module.exports = {
         // if (!regEx.test(pass)) throw new ValidationError("Only use Number In password")
     },
 
-    
+
 }

@@ -18,7 +18,7 @@ module.exports = {
     // check account already exists or not 
     isAdmin: async (token) => {
         const userInfo = await userAccount.userAccount(token);
-        if (userInfo?.rule !=='admin') throw new ValidationError("only admin add new editor")
+        if (userInfo?.rule !=='admin') throw new ValidationError("only admin Access this api")
     },
     // check account already exists or not 
     isEditorActive: async (token) => {

@@ -23,4 +23,16 @@ module.exports = {
             handler(error, res);
         }
     },
+    getAllArticle: async (req, res) =>{
+        try {
+             
+             const articles = await article.getArticleList();
+
+             nativeResponse(articles, "😎😉find all articles😍", res)
+        
+        } catch (error) {
+            console.log(error);
+            handler(error, res);
+        }
+    }
 }

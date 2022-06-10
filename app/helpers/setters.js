@@ -4,6 +4,8 @@ const accountObj = (accObj) => {
         AccountNo: accObj.token,
         name: accObj.name,
         email: accObj.email,
+        image: accObj.image,
+        status: accObj.status
     }
 }
 

@@ -16,8 +16,10 @@ router.get("/", (req, res) => {
 router.post('/createEditor', user.createEditor) // create new account
 router.post("/login", userAuth.login); // login validation
 
-router.post("/removeEditor", user.removeEditor); // login validation
+router.post("/removeEditor", user.removeEditor); // remove editor
+router.get("/editors", user.getAllEditor); // find all editor
 
 router.post("/createArticle", article.addNewArticle)
+router.get("/articles", article.getAllArticle)
 
 module.exports = router;

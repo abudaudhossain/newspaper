@@ -4,8 +4,10 @@ const createNewSession = require("../services/createNewSession");
 const removeEditorAccount = require("../services/removeEditorAccount");
 const userAccount = require("../services/userAccount");
 const createEditorRequestValidation = require("../validations/request/createEditorRequestValidation");
+const findAllEditorRequestValidation = require("../validations/request/findAllEditorRequestValidation");
 const removeEditorRequestValidation = require("../validations/request/removeEditorRequestValidation");
-const validationHelper = require("../validations/validationsHelpers/validationHelper")
+const validationHelper = require("../validations/validationsHelpers/validationHelper");
+const article = require("./article");
 
 module.exports = {
     createEditor: async (req, res) => {
@@ -19,21 +21,6 @@ module.exports = {
             await validationHelper.accountExists(req.body.email)
 
             const account = await userAccount.createNewAccount(req.body);
-
-            // set body account token and create new session
-            req.body.appSetAccountToken = account[0].AccountNo;
-            const newSession = await createNewSession(req.body);
-
-            console.log("new session account =>>24", newSession);
-            // ==> add to new session token 
-            account[0].sessionToken = newSession.data.sessionToken;
-            account[0].sessionStatus = newSession.data.status;
-
-            // ==> add jwt token
-            account[0].jwtToken = getJwtToken(account[0].AccountNo, account[0].sessionToken)
-            console.log("accountAuth l27 :", account[0]);
-
-
 
             nativeResponse(account[0], "😎😉Create a new account😍💋", res)
 
@@ -62,4 +49,21 @@ module.exports = {
             handler(error, res);
         }
     },
+    getAllEditor: async (req, res) => {
+        try {
+            // Validation part
+            findAllEditorRequestValidation(req, res);
+            // check user rule
+            await validationHelper.isAdmin(req.body.appSetUserToken)
+
+            const accounts = await userAccount.accountList();
+
+            nativeResponse(accounts, "😎😉find all editor account", res)
+
+        } catch (error) {
+            console.log(error);
+            handler(error, res);
+        }
+    }
+
 }

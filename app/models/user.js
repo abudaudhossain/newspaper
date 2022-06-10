@@ -20,7 +20,7 @@ const field = {
     "image": {
         type: String
     },
-    "roll": { // 1. admin  2. editor
+    "rule": { // 1. admin  2. editor
         type: String
     },
 

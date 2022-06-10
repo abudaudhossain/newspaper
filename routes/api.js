@@ -1,12 +1,12 @@
 const express = require('express');
-const accountAuth = require('../app/controllers/userAuth');
-const services = require('../app/controllers/services');
 const router = express.Router();
 
 // user validation Middleware
 const validUserRequestMiddleware = require("../app/middleware/validUserRequestMiddleware");
+
 const user = require('../app/controllers/user');
 const userAuth = require('../app/controllers/userAuth');
+const article = require('../app/controllers/article');
 
 
 router.get("/", (req, res) => {
@@ -16,6 +16,8 @@ router.get("/", (req, res) => {
 router.post('/createEditor', user.createEditor) // create new account
 router.post("/login", userAuth.login); // login validation
 
-// router.post("/service", validUserRequestMiddleware, services.transaction)
+router.post("/removeEditor", user.removeEditor); // login validation
+
+router.post("/createArticle", article.addNewArticle)
 
 module.exports = router;

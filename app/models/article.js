@@ -4,22 +4,33 @@ const mongoose = require("mongoose");
 const articleSchema =  mongoose.Schema({
     userToken: {
         type: String,
-        required: true
+ 
     },
     token:{
          type: String,
-        required: true
+ 
     },
     title: {
         type: String,
-        required: true
+ 
     },
     description: {
         type: String,
-        required: true
+   
+    },
+    image: {
+        type: String,
+   
+    },
+    category: {
+        type: String,
+       
     },
     tags: {
         type: Array
+    },
+    status: {
+        type: String
     }
 },{
     timestamps: true,

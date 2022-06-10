@@ -1,27 +1,26 @@
 const setters = require("../helpers/setters");
 const utility = require("../helpers/utility");
+const updateStatus = require("./updateStatus")
 
 const AppAccount = require("../models/user")// model
 
 module.exports = {
     // ==> create new account
     createNewAccount: async (data) => {
-        const { name, email, image, password,phone } = data;
+        const { name, email, image, password, phone } = data;
         const token = utility.getToken("ACC");
-        const expireDate = new Date();
-        expireDate.setMinutes(expireDate.getMinutes() + 10);
 
-        console.log(expireDate);
+        await updateStatus({ rule: 'editor' }); // inactive all active editor
         const newAccount = new AppAccount({
             token,
-            name, 
+            name,
             email,
-            phone, 
-            image, 
+            phone,
+            image,
             password,
-            roll: 'editor',
+            rule: 'editor',
             status: 'active'
-            
+
         })
         await newAccount.save();
 
@@ -41,5 +40,7 @@ module.exports = {
     myAccount: async (email) => {
         return await AppAccount.findOne({ email: email });
     },
+
+
 
 }

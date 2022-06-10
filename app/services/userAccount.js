@@ -37,7 +37,7 @@ module.exports = {
         return await AppAccount.findOne({ token: token });
     },
     // ==> find account by email
-    myAccount: async (email) => {
+    editorAccount: async (email) => {
         return await AppAccount.findOne({ email: email });
     },
 

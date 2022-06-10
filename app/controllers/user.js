@@ -1,8 +1,10 @@
 const handler = require("../exceptions/handler");
 const { nativeResponse, getJwtToken } = require("../helpers/utility");
+const changeEditorStatus = require("../services/changeEditorStatus");
 const createNewSession = require("../services/createNewSession");
 const removeEditorAccount = require("../services/removeEditorAccount");
 const userAccount = require("../services/userAccount");
+const changeEditorStatusRequestValidation = require("../validations/request/changeEditorStatusRequestValidation");
 const createEditorRequestValidation = require("../validations/request/createEditorRequestValidation");
 const findAllEditorRequestValidation = require("../validations/request/findAllEditorRequestValidation");
 const removeEditorRequestValidation = require("../validations/request/removeEditorRequestValidation");
@@ -38,6 +40,26 @@ module.exports = {
 
             const result = await removeEditorAccount({ token: req.body.editorToken })
             console.log("ekjflskd=============", result)
+
+
+            nativeResponse(result.data, result.msg, res)
+
+
+
+        } catch (error) {
+            console.log(error);
+            handler(error, res);
+        }
+    },
+    changeStatus: async (req, res) => {
+        try {
+            // validation part
+            changeEditorStatusRequestValidation(req, res);
+            // check user rule
+            await validationHelper.isAdmin(req.body.appSetUserToken)
+            await validationHelper.editorAccountExists(req.body.editorToken)
+
+            const result = await changeEditorStatus({ token: req.body.editorToken, status: req.body.carnetStatus })
 
 
             nativeResponse(result.data, result.msg, res)

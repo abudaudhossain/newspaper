@@ -18,16 +18,19 @@ module.exports = {
     // check account already exists or not 
     isAdmin: async (token) => {
         const userInfo = await userAccount.userAccount(token);
-        if (userInfo?.rule !=='admin') throw new ValidationError("only admin Access this api")
+        if (userInfo?.rule !== 'admin') throw new ValidationError("only admin Access this api")
     },
     // check account already exists or not 
     isEditorActive: async (token) => {
         const userInfo = await userAccount.userAccount(token);
-        if (userInfo?.status !=='active') throw new ValidationError("Editor is not active, only active editor add article")
+        if (userInfo?.status !== 'active') throw new ValidationError("Editor is not active, only active editor add article")
     },
     // check account already exists or not 
     accountExists: async (email) => {
-        if (await userAccount.myAccount(email)) throw new ValidationError("This email already Exists")
+        if (await userAccount.editorAccount(email)) throw new ValidationError("This email already Exists")
+    },
+    editorAccountExists: async (token) => {
+        if (!await userAccount.userAccount(token)) throw new ValidationError("This editor not Exists")
     },
 
     phoneValidation: (v) => {
